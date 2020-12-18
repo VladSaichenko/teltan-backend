@@ -2,7 +2,6 @@ import os
 
 import dj_database_url
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = '!6xmo&@!7dzw8p6yxjnj&&1lur%4+fs!r2tuzb#6j(64s@m6)*'
 ROOT_URLCONF = 'config.urls'
@@ -101,7 +100,6 @@ if not DEBUG:
         },
     ]
 
-
 ##################################################################
 # Static files settings (CSS, JavaScript, Images)
 ##################################################################
@@ -128,9 +126,11 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o777
 if DEBUG:
     from .installed_apps import *
 
+
     def show_toolbar(request):
         from django.conf import settings
         return settings.DEBUG
+
 
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
@@ -145,6 +145,8 @@ if DEBUG:
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'url_filter.integrations.drf.DjangoFilterBackend',
@@ -155,6 +157,20 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
+
+# AUTHENTICATION_BACKENDS = [
+#     # Others auth providers (e.g. Google, OpenId, etc)
+#
+#     # Facebook OAuth2
+#     'social_core.backends.facebook.FacebookAppOAuth2',
+#     'social_core.backends.facebook.FacebookOAuth2',
+#
+#     # django-rest-framework-social-oauth2
+#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
+#
+#     # Django
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 if DEBUG:
     del REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES']

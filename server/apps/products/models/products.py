@@ -20,7 +20,7 @@ class Product(models.Model):
     price = models.DecimalField('Price', max_digits=7, decimal_places=2)
     category = models.ForeignKey(Category, verbose_name='Category', on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField('Year')
-    age_restriction = models.PositiveSmallIntegerField('Возрастное ограничение', choices=AGE_RESTRICTION_CHOICES)
+    age_restriction = models.PositiveSmallIntegerField('Age restrictions', choices=AGE_RESTRICTION_CHOICES)
     available_for_drawing = models.BooleanField('Is available for drawing', default=False)
     created = models.DateTimeField(auto_now_add=True)
 

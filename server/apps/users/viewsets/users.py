@@ -4,15 +4,15 @@ from rest_framework import viewsets, mixins
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-from apps.users.serializers.users import RegistrationUserSerializer
-from apps.users.models.profiles import Profile
 from apps.cart.models.models import Cart
+from apps.users.models.profiles import Profile
+from apps.users.serializers.users import RegistrationUserSerializer
 
 
 class UserViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   viewsets.GenericViewSet):
-    """ Initilizing User and Token"""
+    """ Initializing User and Token"""
 
     queryset = User.objects.all()
     serializer_class = RegistrationUserSerializer
