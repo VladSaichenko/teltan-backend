@@ -31,13 +31,13 @@ class UserViewSet(mixins.CreateModelMixin,
         user.set_password(serializer.validated_data['password'])
         user.save()
 
-        profile = Profile.objects.create(
+        Profile.objects.create(
             user=user,
             phone_num_code=serializer.validated_data['profile']['phone_num_code'],
             phone_num=serializer.validated_data['profile']['phone_num'],
         )
 
-        Cart.objects.create(profile=profile)
+        Cart.objects.create(user=user)
 
         token = Token.objects.get_or_create(user=user)[0]
 

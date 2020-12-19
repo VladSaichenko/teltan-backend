@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from apps.secondary_objects.models.for_products import Category
-from apps.users.models.profiles import Profile
 
 
 class Product(models.Model):
@@ -13,7 +13,7 @@ class Product(models.Model):
         (18, '18+'),
     )
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField('Name', max_length=65)
     description = models.TextField('Description')
     main_image = models.ImageField(upload_to='product_main_images')
@@ -29,5 +29,5 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image = models.ImageField(upload_to='product_images')
