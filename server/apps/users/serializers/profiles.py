@@ -9,3 +9,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('phone_num_code', 'phone_num', 'address')
+
+
+class PublicProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('id', 'picture')

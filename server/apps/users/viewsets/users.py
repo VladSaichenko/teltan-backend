@@ -4,18 +4,21 @@ from rest_framework import viewsets, mixins
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
+from apps.api.permissions.is_owner import IsOwner
 from apps.cart.models.models import Cart
 from apps.users.models.profiles import Profile
-from apps.users.serializers.users import RegistrationUserSerializer
+from apps.users.serializers.users import RegistrationUserSerializer, PublicUserSerializer
 
 
 class UserViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     """ Initializing User and Token"""
 
     queryset = User.objects.all()
     serializer_class = RegistrationUserSerializer
+    permission_classes = (IsOwner,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
@@ -41,4 +44,13 @@ class UserViewSet(mixins.CreateModelMixin,
 
         token = Token.objects.get_or_create(user=user)[0]
 
-        return Response({'id': user.username, 'token': token.key, 'username': user.username}, status=status.HTTP_201_CREATED)
+        return Response({
+            'id': user.username,
+            'token': token.key, 'username': user.username
+        }, status=status.HTTP_201_CREATED)
+
+
+class PublicUserViewSet(mixins.RetrieveModelMixin,
+                        viewsets.GenericViewSet):
+    serializer_class = PublicUserSerializer
+    queryset = User.objects.all()

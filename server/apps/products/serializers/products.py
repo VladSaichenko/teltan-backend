@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, CurrentUserDefault
 
 from apps.products.models.products import Product, ProductImage
-from django.contrib.auth.models import User
+from apps.users.serializers.users import PublicUserSerializer
 
 
 class ProductImageSerializer(ModelSerializer):
@@ -12,7 +12,7 @@ class ProductImageSerializer(ModelSerializer):
 
 class ProductSerializer(ModelSerializer):
     product_images = PrimaryKeyRelatedField(many=True, read_only=True)
-    user = PrimaryKeyRelatedField(queryset=User.objects.all(), default=CurrentUserDefault())
+    user = PublicUserSerializer(default=CurrentUserDefault(), many=False, read_only=True)
 
     class Meta:
         model = Product

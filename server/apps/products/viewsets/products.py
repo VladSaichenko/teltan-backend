@@ -11,23 +11,9 @@ from apps.products.serializers.products import ProductSerializer
 
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('-created')
     permission_classes = (IsOwnerOrReadOnly,)
     # TODO: Test it
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-
-        # Creating drawing tickets.
-        if serializer.validated_data['available_for_drawing']:
-            if serializer.validated_data['price'] <= 1000:
-                n = 100
-            elif 1000 <= serializer.validated_data['price'] <= 10000:
-                n = 1000
-            else:
-                n = 10000
-
-            Ticket.objects.bulk_create([Ticket(product=instance)] * n)
 
     def perform_update(self, serializer):
         # Prevents updating `price` and `available_for_drawing` fields.
