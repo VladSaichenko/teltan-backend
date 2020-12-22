@@ -3,7 +3,7 @@ from django.db import models
 
 class Country(models.Model):
     name = models.CharField('Name', max_length=23)
-    code = models.PositiveSmallIntegerField('Code')
+    code = models.PositiveSmallIntegerField('Code', primary_key=True)
     icon = models.ImageField('Icon', upload_to='country_icons')
 
     def __str__(self):

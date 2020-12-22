@@ -1,14 +1,15 @@
-from django.contrib import admin
 from django.conf import settings
-from django.urls import include, path
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+from rest_framework.authtoken import views
 
 from apps.api.routers import router
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api-token-auth/', views.obtain_auth_token),
     path('drawings/', include('apps.drawings.urls'))
 ]
 

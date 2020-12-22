@@ -5,6 +5,7 @@ from apps.users.serializers.profiles import ProfileSerializer, PublicProfileSeri
 
 
 class RegistrationUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
     profile = ProfileSerializer()
 
     class Meta:
