@@ -8,7 +8,7 @@ from apps.products.models.products import Product
 @receiver(post_save, sender=Product)
 def create_tickets(sender, instance, **kwargs):
     if not Ticket.objects.filter(product=instance).exists():
-        if instance.available_for_drawing:
+        if instance.is_draw:
             if instance.price <= 1000:
                 n = 100
             elif 1000 <= instance.price <= 10000:

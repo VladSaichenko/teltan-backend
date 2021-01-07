@@ -12,13 +12,13 @@ class ProductImageSerializer(ModelSerializer):
 
 class ProductSerializer(ModelSerializer):
     product_images = PrimaryKeyRelatedField(many=True, read_only=True)
-    user = PublicUserSerializer(default=CurrentUserDefault(), many=False, read_only=True)
+    user = PublicUserSerializer(default=CurrentUserDefault())
 
     class Meta:
         model = Product
         fields = (
             'id', 'user', 'name', 'description', 'main_image', 'price', 'category', 'year',
-            'age_restriction', 'available_for_drawing', 'created', 'product_images'
+            'age_restriction', 'is_draw', 'created', 'product_images'
         )
         extra_kwargs = {
             'user': {'read_only': True},

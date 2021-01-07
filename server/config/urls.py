@@ -2,14 +2,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.authtoken import views
+from apps.users.viewsets.users import CustomAuthToken
 
 from apps.api.routers import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api-token-auth/', views.obtain_auth_token),
+    path('api-token-auth/', CustomAuthToken.as_view()),
     path('drawings/', include('apps.drawings.urls'))
 ]
 

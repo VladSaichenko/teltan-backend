@@ -1,5 +1,6 @@
 from django.db.models import Q
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -12,13 +13,13 @@ from apps.products.serializers.products import ProductSerializer
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all().order_by('-created')
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     # TODO: Test it
 
     def perform_update(self, serializer):
-        # Prevents updating `price` and `available_for_drawing` fields.
+        # Prevents updating `price` and `is_draw` fields.
         serializer.validated_data.pop('price')
-        serializer.validated_data.pop('available_for_drawing')
+        serializer.validated_data.pop('is_draw')
         serializer.save()
 
     def destroy(self, request, *args, **kwargs):

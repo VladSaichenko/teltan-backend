@@ -14,14 +14,14 @@ class Product(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField('Name', max_length=65)
+    name = models.CharField('Name', max_length=80)
     description = models.TextField('Description')
     main_image = models.ImageField(upload_to='product_main_images')
-    price = models.DecimalField('Price', max_digits=7, decimal_places=2)
+    price = models.DecimalField('Price', max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, verbose_name='Category', on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField('Year')
     age_restriction = models.PositiveSmallIntegerField('Age restrictions', choices=AGE_RESTRICTION_CHOICES)
-    available_for_drawing = models.BooleanField('Is available for drawing', default=False)
+    is_draw = models.BooleanField('Is draw', default=False)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
