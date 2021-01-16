@@ -159,6 +159,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kachevskilevik@gmail.com'
+EMAIL_HOST_PASSWORD = 'vojllwvxisvzbwbk'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 # AUTHENTICATION_BACKENDS = [
 #     # Others auth providers (e.g. Google, OpenId, etc)
 #

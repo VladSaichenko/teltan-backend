@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from apps.api.permissions.is_users_profile import IsUsersProfile
 from apps.cart.models.models import Cart
+from apps.money_accounts.models.money_accounts import MoneyAccount
 from apps.users.models.profiles import Profile
 from apps.users.serializers.users import RegistrationUserSerializer, PublicUserSerializer
 
@@ -15,7 +16,7 @@ class UserViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
-    """ Initializing User and Token"""
+    """ Initializing User, Token, Profile, Cart, MoneyAccount"""
 
     queryset = User.objects.all()
     serializer_class = RegistrationUserSerializer
@@ -42,6 +43,7 @@ class UserViewSet(mixins.CreateModelMixin,
         )
 
         Cart.objects.create(user=user)
+        MoneyAccount.objects.create(user=user)
 
         token = Token.objects.get_or_create(user=user)[0]
 

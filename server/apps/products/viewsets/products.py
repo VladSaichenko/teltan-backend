@@ -14,9 +14,16 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all().order_by('-created')
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
-    # TODO: Test it
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.viewed += 1
+        instance.save(update_fields=['viewed'])
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     def perform_update(self, serializer):
+        # TODO: Add it to model
         # Prevents updating `price` and `is_draw` fields.
         serializer.validated_data.pop('price')
         serializer.validated_data.pop('is_draw')

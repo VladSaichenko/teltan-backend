@@ -14,14 +14,22 @@ class Product(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField('Name', max_length=80)
-    description = models.TextField('Description')
+    name = models.CharField(max_length=80)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='product_main_images')
-    price = models.DecimalField('Price', max_digits=10, decimal_places=2)
-    category = models.ForeignKey(Category, verbose_name='Category', on_delete=models.CASCADE)
-    year = models.PositiveSmallIntegerField('Year')
-    age_restriction = models.PositiveSmallIntegerField('Age restrictions', choices=AGE_RESTRICTION_CHOICES)
-    is_draw = models.BooleanField('Is draw', default=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    year = models.PositiveSmallIntegerField(null=True)
+    age_restriction = models.PositiveSmallIntegerField(choices=AGE_RESTRICTION_CHOICES)
+
+    is_draw = models.BooleanField(default=False)
+    tickets_amount = models.PositiveSmallIntegerField(default=0)
+    tickets_bought = models.PositiveSmallIntegerField(default=0)
+    ticket_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    redemption_percent = models.PositiveSmallIntegerField(default=0)
+
+    is_active = models.BooleanField(default=True)
+    viewed = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

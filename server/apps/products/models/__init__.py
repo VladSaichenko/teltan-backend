@@ -1,1 +1,2 @@
-from .signals.create_tickets import *
+from .signals.set_tickets_amount import *
+from .signals.count_tickets import *
